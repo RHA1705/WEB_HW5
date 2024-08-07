@@ -9,14 +9,16 @@ URL = 'https://api.privatbank.ua/p24api/exchange_rates?date=' # konstanta dla UR
 
 def pars() -> str: # funkcja do definicji argumentu  konsoli
     parser = argparse.ArgumentParser() # tworzymy obiekt klasy parsera
-    parser.add_argument('-d', '--days', default='1') # definiujemy argument dla liczby dni wstecz kursów walut
-    args = vars(parser.parse_args()) # zmienna 
-    return args
+    parser.add_argument('-d', '--days', default='1', help='Number of days to ') # definiujemy argument dla liczby dni wstecz kursów walut
+    args = vars(parser.parse_args()) # funkcja vars zwraca __dict__ atrybut dla obiektu (w tym przypadku obiektem jest 'parser'-obiekt typu ArgumentParser,
+                                     # w którym funkcja parse_args() analizuje argumenty i przypisuje zgodnie z funkcją add_argument())'''
+    print(args) 
+    return args # zwracamy wartości zadane w konsoli do późniejszych obliczeń daty, wartości zwrcane w postaci dict (w naszym przypadku {days: ilość dni zadana w konsoli}')
 
 def days_list():
-    days = []
-    number_ask_days = int(pars().get('days'))
-    for day in range(number_ask_days):
+    days = [] # zmienna typu list dla tworzenia listy dat wstecz od obecnej w zależności od argumentu puktu wejścia (ilości)
+    number_ask_days = int(pars().get('days')) # 
+    for day in range(number_ask_days): # pętla do 
         if number_ask_days <= 10 :
             asked_day = CURRENT_DAY - timedelta(days=day)
             days.append(asked_day.strftime('%d.%m.%Y'))
