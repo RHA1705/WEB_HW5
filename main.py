@@ -7,7 +7,7 @@ from datetime import date, timedelta
 CURRENT_DAY = date.today() # konstanta z obecną datą na moment zapytania
 URL = 'https://api.privatbank.ua/p24api/exchange_rates?date=' # konstanta dla URL adresu PryvatBanku
 
-def pars() -> str: # funkcja do definicji argumentu  konsoli
+def pars() -> dict: # funkcja do definicji argumentu  konsoli
     parser = argparse.ArgumentParser() # tworzymy obiekt klasy parsera
     parser.add_argument('-d', '--days', default='1', help='Number of days to ') # definiujemy argument dla liczby dni wstecz kursów walut
     args = vars(parser.parse_args()) # funkcja vars zwraca __dict__ atrybut dla obiektu (w tym przypadku obiektem jest 'parser'-obiekt typu ArgumentParser,
