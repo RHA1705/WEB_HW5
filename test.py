@@ -2,19 +2,23 @@ import argparse
 import sys
 
 def main():
-    parser = argparse.ArgumentParser(description='Prosty przykład użycia argparse')
-    parser.add_argument('-n', '--name', help='Podaj swoje imię')
-    parser.add_argument('-a', '--age', help='Podaj swój wiek')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('name', help='Enter your name')
+    parser.add_argument('age', help='Enter your age')
 
     args = parser.parse_args()
-    
-    if not args.name:
-        print('Argument --name musi być podany przed --age')
-        sys.exit(1)
-    else:
-        print(f'Witaj, {args.name}!')
-        if args.age:
-            print(f'Masz {args.age} lat.')
+
+    try:
+        n = int(args.name)
+        if n:
+            print("Name can't be a number")
+            sys.exit(1)
+    except ValueError:
+        pass
+
+    print(f'Hello, {args.name}!')
+    if args.age:
+        print(f'You are {args.age} years old.')
 
 if __name__ == '__main__':
     main()
