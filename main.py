@@ -12,7 +12,6 @@ def pars() -> dict: # funkcja do definicji argumentu  konsoli
     parser.add_argument('-d', '--days', default='1', help='Number of days to ') # definiujemy argument dla liczby dni wstecz kursów walut
     args = vars(parser.parse_args()) # funkcja vars zwraca __dict__ atrybut dla obiektu (w tym przypadku obiektem jest 'parser'-obiekt typu ArgumentParser,
                                      # w którym funkcja parse_args() analizuje argumenty i przypisuje zgodnie z funkcją add_argument())'''
-    print(args) 
     return args # zwracamy wartości zadane w konsoli do późniejszych obliczeń daty, wartości zwrcane w postaci dict (w naszym przypadku {days: ilość dni zadana w konsoli}')
 
 def days_list():
@@ -35,10 +34,16 @@ def url_list(days):
 
 async def convert(url):
     async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            result = await response.json()
-            await format_json(result)
-            return result
+        try:
+            async with session.get(url) as response:
+                if response.status == 200:
+                    result = await response.json()
+                    await format_json(result)
+                    return result
+                else:
+                    print(f"Error status: {response.status} for {url}")
+        except aiohttp.ClientConnectorError as er:
+            print(f"Connection error: {url}", str(er))
 
 
 async def format_json(data):
